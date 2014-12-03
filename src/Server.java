@@ -6,9 +6,11 @@ import java.net.Socket;
 import javax.swing.JTextField;
 
 
+
 public class Server {
 
-
+	
+	public static ServerSocket serverSocket;
 	public String datain;
 	public String dataout;
 	
@@ -17,11 +19,12 @@ public class Server {
  public Server()
  {
 	  
-  ServerSocket serverSocket = null;
+  serverSocket = null;
   Socket socket = null;
   DataInputStream dataInputStream = null;
   DataOutputStream dataOutputStream = null;
     
+ 
   try {
    serverSocket = new ServerSocket(8894);
    System.out.println(serverSocket.getLocalPort());
@@ -30,8 +33,9 @@ public class Server {
    
    e.printStackTrace();
   }
-  
-  while(true){
+
+ 
+  while(!serverSocket.isClosed()){
    try {
     socket = serverSocket.accept();
     dataInputStream = new DataInputStream(socket.getInputStream());

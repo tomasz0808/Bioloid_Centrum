@@ -1,8 +1,13 @@
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,6 +53,7 @@ public class Gui {
 	}
 	
 	
+	
 	public static void addtotable(String status, String nurse)
 	{
 		Date dateobj = new Date();
@@ -59,10 +65,25 @@ public class Gui {
 	{
 		
 		okno = new JFrame("Bioloid Center");
+//		okno.addWindowListener(new WindowAdapter() {
+//			
+//			@Override
+////			public void windowClosing(WindowEvent e) {
+////				// TODO Auto-generated method stub
+////				super.windowClosing(e);
+////				try {
+////					Server.serverSocket.close();
+////				} catch (IOException e1) {
+////					// TODO Auto-generated catch block
+////					e1.printStackTrace();
+////				}
+////				
+////				}
+////			
+//		});
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println();
 		
-		
+				
 		
 		table = new JTable();
 		model = new DefaultTableModel();
@@ -72,23 +93,13 @@ public class Gui {
 		model.addColumn("Status");
 		model.addColumn("Nurse");
 		
-		
-		
-		
 	
 		JScrollPane scrollPane = new JScrollPane(table);
-//		scrollPane.setBounds(50, 400, 1100, 300);
 		scrollPane.setPreferredSize(new Dimension(1100,250));
 		panelTable = new JPanel();
 		panelTable.setBounds(50, 400, 1100, 300);
-//		panelTable.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		panelTable.add(scrollPane);
 		panelTable.setVisible(true);
-		
-		
-		
-		
-		//panel tabeli	
 		
 						
 		//Menu
