@@ -1,15 +1,14 @@
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.bluetooth.*;
+
 
 public class Gui {
 	
@@ -22,7 +21,6 @@ public class Gui {
 	private JMenuItem menuItem;
 	private JMenuBar menu;
 	private JLabel label;
-	private JLabel label2;
 	private JMenu menuLista;
 	private JTextField tabela;
 	
@@ -55,7 +53,7 @@ public class Gui {
 		
 		// label
 		label = new JLabel();
-		label2 = new JLabel();
+	
 		
 				
 		przycisk1 = new JButton("Start");
