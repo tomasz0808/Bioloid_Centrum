@@ -2,6 +2,8 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.text.DateFormat;
@@ -22,8 +24,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Gui {
 	
-	private JFrame okno;
-	private JButton przycisk1;
+	public static JFrame okno;
+	public static JButton przycisk1;
 	private JButton przycisk2;
 	private JButton przycisk3;
 	private JButton przycisk4 ;
@@ -34,73 +36,62 @@ public class Gui {
 	private JMenu menuLista;
 	public JPanel panelTable;
 	public static DefaultTableModel model;
+	private Socket socket;
+	private DataInputStream dataInputStream; 
+	private DataOutputStream dataOutputStream; 
 	public JTable table;
 	public static DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	public static int tableId = 1;
-	//	private Calendar dateAndTime; 
-	
-		
-	
-	
-	
-	public Gui() {
-		frameinit();
-//		for(int i=0; i<50000000; i++)
-//		{
+
+	public Gui() {		
+		frameinit();		
+//		for(int i=0; i<50000000; i++){
 //			addtotable("Gówno", "Tak");
-//		}
-//		
+//		}		
 	}
-	
-	
-	
-	public static void addtotable(String status, String nurse)
-	{
+
+	public static void addtotable(String status, String nurse){
 		Date dateobj = new Date();
 		model.insertRow(0, new Object [] {tableId, df.format(dateobj),status, nurse});
-		tableId++;
-		
+		tableId++;		
 	}
-	public void frameinit()
-	{
-		
+	
+	public void frameinit(){	
 		okno = new JFrame("Bioloid Center");
-//		okno.addWindowListener(new WindowAdapter() {
-//			
+//		okno.addWindowListener(new WindowAdapter() {		
 //			@Override
-////			public void windowClosing(WindowEvent e) {
-////				// TODO Auto-generated method stub
-////				super.windowClosing(e);
-////				try {
-////					Server.serverSocket.close();
-////				} catch (IOException e1) {
-////					// TODO Auto-generated catch block
-////					e1.printStackTrace();
-////				}
-////				
-////				}
+//			public void windowClosing(WindowEvent e) {
+//				// TODO Auto-generated method stub
+//				super.windowClosing(e);
+//				try {			
+//					if(Server.socket.isConnected()){
+//					dataInputStream.close();
+//					dataOutputStream.close();
+////					socket.close();
+//					}
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}				
+//			}
 ////			
 //		});
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-				
-		
+	
 		table = new JTable();
 		model = new DefaultTableModel();
 		table.setModel(model);
 		model.addColumn("Id");
 		model.addColumn("Time");
 		model.addColumn("Status");
-		model.addColumn("Nurse");
-		
+		model.addColumn("Nurse");		
 	
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setPreferredSize(new Dimension(1100,250));
 		panelTable = new JPanel();
 		panelTable.setBounds(50, 400, 1100, 300);
 		panelTable.add(scrollPane);
-		panelTable.setVisible(true);
-		
+		panelTable.setVisible(true);		
 						
 		//Menu
 		menu = new JMenuBar();
@@ -121,8 +112,7 @@ public class Gui {
 		przycisk4 = new JButton();
 		przycisk4.setBounds(300, 200, 200, 100);
 		przycisk5 = new JButton();
-		przycisk5.setSize(100, 50);
-		
+		przycisk5.setSize(100, 50);		
 		
 		label.add(przycisk1);
 		label.add(przycisk2);
@@ -130,13 +120,10 @@ public class Gui {
 		label.add(przycisk4);
 		label.add(panelTable);
 		
-		
-		
-		
 		// Frame
-		okno.setSize(1200, 800);
+		okno.setSize(300, 300);
 		okno.setLocationRelativeTo(null);
-		okno.setResizable(false);
+//		okno.setResizable(false);
 		okno.setJMenuBar(menu);
 		okno.getContentPane().add(label);
 		//okno.getContentPane().add(label2, BorderLayout.CENTER);
