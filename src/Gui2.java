@@ -24,8 +24,9 @@ import javax.swing.table.DefaultTableModel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 
-public class Gui2 extends JFrame {
+public class Gui2 {
 
+	public static JFrame frame = new JFrame();
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField sendText;	
@@ -45,14 +46,17 @@ public class Gui2 extends JFrame {
 	}
 	
 	public Gui2() {
-//		frameinit();
-//	}
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 650);
+		frameinit();
+	}
+	
+	public void frameinit(){
+		
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 800, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panelIp = new JPanel();
@@ -147,6 +151,6 @@ public class Gui2 extends JFrame {
 		logo.setIcon(new ImageIcon(Gui2.class.getResource("/cross/cross.png")));
 		logo.setBounds(550, 30, 159, 130);
 		contentPane.add(logo);
-		setVisible(true);
+		frame.setVisible(true);
 	}
 }

@@ -25,7 +25,7 @@ public class Server {
  public Server() throws IOException 
  {    
  	 button = Gui2.wakeUp;
-	 JFrame okno = Gui2.get
+	 JFrame okno = Gui2.frame;
 	
 	
 	 serverSocket = new ServerSocket(10006);
