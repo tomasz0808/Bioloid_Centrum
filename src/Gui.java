@@ -36,18 +36,12 @@ public class Gui {
 	private JMenu menuLista;
 	public JPanel panelTable;
 	public static DefaultTableModel model;
-	private Socket socket;
-	private DataInputStream dataInputStream; 
-	private DataOutputStream dataOutputStream; 
 	public JTable table;
 	public static DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	public static int tableId = 1;
 
 	public Gui() {		
-		frameinit();		
-//		for(int i=0; i<50000000; i++){
-//			addtotable("Gówno", "Tak");
-//		}		
+		frameinit();			
 	}
 
 	public static void addtotable(String status, String nurse){
@@ -58,24 +52,6 @@ public class Gui {
 	
 	public void frameinit(){	
 		okno = new JFrame("Bioloid Center");
-//		okno.addWindowListener(new WindowAdapter() {		
-//			@Override
-//			public void windowClosing(WindowEvent e) {
-//				// TODO Auto-generated method stub
-//				super.windowClosing(e);
-//				try {			
-//					if(Server.socket.isConnected()){
-//					dataInputStream.close();
-//					dataOutputStream.close();
-////					socket.close();
-//					}
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}				
-//			}
-////			
-//		});
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		table = new JTable();
@@ -123,11 +99,9 @@ public class Gui {
 		// Frame
 		okno.setSize(300, 300);
 		okno.setLocationRelativeTo(null);
-//		okno.setResizable(false);
+		//okno.setResizable(false);
 		okno.setJMenuBar(menu);
 		okno.getContentPane().add(label);
-		//okno.getContentPane().add(label2, BorderLayout.CENTER);
-		
 		okno.setVisible(true);
 		
 	}

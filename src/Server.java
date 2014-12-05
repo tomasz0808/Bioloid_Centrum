@@ -11,12 +11,8 @@ import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
-
-
 public class Server {
 
-	
 	public static ServerSocket serverSocket = null;
 	public static Socket socket = null;
 	public static DataInputStream dataInputStream = null;
@@ -24,28 +20,21 @@ public class Server {
 	public JButton button;
 	public String dataIn;
 	public String dataOut;
-	private Thread socketListen;
 	public boolean isConnected;
 	
-
-
  public Server() throws IOException 
  {    
- 
-	 button = Gui.przycisk1;
-	 socketListen = new Thread(new SocketConn());
+ 	 button = Gui.przycisk1;
 	 JFrame okno = Gui.okno;
 	
 	
 	 serverSocket = new ServerSocket(10006);
-	    socket = serverSocket.accept();
+	 socket = serverSocket.accept();
 	    if(socket.isConnected())
 		    isConnected = true;
-	 System.out.println(serverSocket.getLocalPort());
-//	 socketListen.start();
-	 button.addActionListener(new ActionListener() {
-			
-			@Override
+	    	System.out.println(serverSocket.getLocalPort());
+	    	button.addActionListener(new ActionListener() {
+	    	@Override
 			public void actionPerformed(ActionEvent e) {
 				if(isConnected==true){
 					try {
@@ -60,24 +49,18 @@ public class Server {
 			}
 		});
 	 while(socket.isConnected()){
-
-	   
-	    
 	    System.out.println("Po³¹czenie: "+isConnected);	    
 	    if(isConnected){
 		    dataInputStream = new DataInputStream(socket.getInputStream());
 		    dataOutputStream = new DataOutputStream(socket.getOutputStream());
 		    dataIn = dataInputStream.readUTF();
-		    
 		    if (!dataIn.isEmpty()){    	
 		    	Gui.addtotable(dataIn, dataIn);  
-		    }		    
-		   
+		    }		       
 	   	}
 	  }
 	
-	 okno.addWindowListener(new WindowAdapter() {
-		
+	 okno.addWindowListener(new WindowAdapter() {	
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
@@ -109,16 +92,4 @@ public class Server {
 	 return dataOutputStream;
  }
  
- 
-class SocketConn extends Thread {
-	
-	
-	 public void run() {
-		 while(isConnected){
-			 if (!dataIn.isEmpty()){    	
-			    	Gui.addtotable(dataIn, dataIn);  
-			    }		 	 
-		 	}
-	 	}
-	}
 }
