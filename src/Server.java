@@ -5,7 +5,6 @@ import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,7 +20,7 @@ public class Server {
 	public static ServerSocket serverSocket = null;
 	public static Socket socket = null;
 	public static DataInputStream dataInputStream = null;
-	public static OutputStream dataOutputStream = null;
+	public static DataOutputStream dataOutputStream = null;
 	public JButton button;
 	public String dataIn;
 	public String dataOut;
@@ -36,52 +35,47 @@ public class Server {
 	 button = Gui.przycisk1;
 	 socketListen = new Thread(new SocketConn());
 	 JFrame okno = Gui.okno;
-
+	
 	
 	 serverSocket = new ServerSocket(10006);
-	 System.out.println(serverSocket.getLocalPort());
-//	 socketListen.start();
-  
-	 while(!serverSocket.isClosed()){
 	    socket = serverSocket.accept();
 	    if(socket.isConnected())
-	    isConnected = true;
+		    isConnected = true;
+	 System.out.println(serverSocket.getLocalPort());
+//	 socketListen.start();
+	 button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(isConnected==true){
+					try {
+						dataOutputStream.writeUTF("ASD");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
+				
+			}
+		});
+	 while(socket.isConnected()){
+
+	   
 	    
 	    System.out.println("Po³¹czenie: "+isConnected);	    
 	    if(isConnected){
 		    dataInputStream = new DataInputStream(socket.getInputStream());
-		    dataOutputStream = socket.getOutputStream();
+		    dataOutputStream = new DataOutputStream(socket.getOutputStream());
 		    dataIn = dataInputStream.readUTF();
 		    
 		    if (!dataIn.isEmpty()){    	
 		    	Gui.addtotable(dataIn, dataIn);  
 		    }		    
-		    button.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(socket.isConnected() ){				
-						try {
-							dataOutputStream.write(1);;
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}							
-					} else
-						System.out.println("You are not connected");				
-				}
-			});		
+		   
 	   	}
 	  }
-	 button.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(isConnected==true){
-				
-			}
-			
-		}
-	});
+	
 	 okno.addWindowListener(new WindowAdapter() {
 		
 		@Override
