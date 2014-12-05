@@ -5,8 +5,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-		new Gui();
+		new Gui2();
 		new Server();
+		
 		
 	}
 	

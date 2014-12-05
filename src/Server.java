@@ -24,8 +24,8 @@ public class Server {
 	
  public Server() throws IOException 
  {    
- 	 button = Gui.przycisk1;
-	 JFrame okno = Gui.okno;
+ 	 button = Gui2.wakeUp;
+	 JFrame okno = Gui2.get
 	
 	
 	 serverSocket = new ServerSocket(10006);
@@ -55,7 +55,7 @@ public class Server {
 		    dataOutputStream = new DataOutputStream(socket.getOutputStream());
 		    dataIn = dataInputStream.readUTF();
 		    if (!dataIn.isEmpty()){    	
-		    	Gui.addtotable(dataIn, dataIn);  
+		    	Gui2.addtotable(dataIn, dataIn);  
 		    }		       
 	   	}
 	  }
