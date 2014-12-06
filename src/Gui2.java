@@ -1,10 +1,14 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 
+
+
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 
@@ -30,7 +37,7 @@ public class Gui2 {
 	public static JFrame frame = new JFrame();
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField sendText;	
+	
 	public static DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	public static int tableId = 1;
 	private static  DefaultTableModel model = new DefaultTableModel(
@@ -39,7 +46,10 @@ public class Gui2 {
 	public static JButton wakeUp;
 	public static JButton connectToRobot;	
 	public static JLabel connectionStatus;
+	public static JButton btnSendText;
+	public static JTextField sendText;
 	private String ipAddr ;
+	public static JButton clearLogs;
 	
 	
 	public static void addtotable(String status, String nurse){
@@ -67,6 +77,8 @@ public class Gui2 {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+	
+		
 		
 		JPanel panelIp = new JPanel();
 		panelIp.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -104,6 +116,7 @@ public class Gui2 {
 		scrollPane.setBounds(20, 340, 755, 250);
 		contentPane.add(scrollPane);
 		
+		
 		table = new JTable();
 		table.setEnabled(false);
 		table.setFont(UIManager.getFont("Table.font"));
@@ -118,7 +131,7 @@ public class Gui2 {
 		table.getColumnModel().getColumn(2).setPreferredWidth(295);
 		scrollPane.setViewportView(table);
 		
-		JButton clearLogs = new JButton("Clear logs");
+		clearLogs = new JButton("Clear logs");
 		clearLogs.setBounds(20, 300, 100, 25);
 		contentPane.add(clearLogs);
 		
@@ -145,7 +158,7 @@ public class Gui2 {
 		panelSendText.setBounds(295, 180, 480, 100);
 		contentPane.add(panelSendText);
 		
-		JButton btnSendText = new JButton("Send Message");
+		btnSendText = new JButton("Send Message");
 		btnSendText.setBounds(15, 15, 140, 45);
 		
 		sendText = new JTextField();
@@ -162,5 +175,13 @@ public class Gui2 {
 		logo.setBounds(550, 30, 159, 130);
 		contentPane.add(logo);
 		frame.setVisible(true);
+		
+		clearLogs.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.setRowCount(0);
+				tableId = 1;
+			}
+		});
 	}
 }
