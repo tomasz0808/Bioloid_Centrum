@@ -100,7 +100,7 @@ public class Server {
 				try {
 					String rawText = sendText.getText();
 					dataOutputStream.writeUTF(rawText);
-					
+					 
 					System.out.println("Siema");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -216,6 +216,11 @@ public class Server {
 					
 				} 
 		    	catch (IOException e) {
+		    		try {
+	        			serverSocket.close();
+	        		}catch (IOException e1){
+	        			e1.printStackTrace();
+	        		}
 		    		isConnected = false;
 		    		connectionAlert(isConnected);
 		    		break;
