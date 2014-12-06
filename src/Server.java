@@ -39,33 +39,22 @@ public class Server {
 	connectToRobot.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			connecion();
+			if(isConnected==true){
+				try {
+					dataInputStream.close();
+					dataOutputStream.close();
+					socket.close();
+					t.interrupt();
+					isConnected = false;
+					connectionAlert(isConnected);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}else{
+				connecion();
+			}
 		}});
 	
-	while(isConnected ==true){							
-		while(socket.isConnected()){    
-			try{
-				
-				dataInputStream = new DataInputStream(socket.getInputStream());
-				dataOutputStream = new DataOutputStream(socket.getOutputStream());
-				wakeUp.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						try {
-							dataOutputStream.writeUTF("siema");
-							System.out.println("wysla³em");
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-				});	
-			}
-			catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}									
-	}
 				 	 	
 	okno.addWindowListener(new WindowAdapter() {	
 		@Override
@@ -121,6 +110,8 @@ public class Server {
         	serverSocket = new ServerSocket(connectionPort);
           	port = serverSocket.getLocalPort();
             socket = serverSocket.accept(); // Tu czeka
+            dataInputStream = new DataInputStream(socket.getInputStream());
+			dataOutputStream = new DataOutputStream(socket.getOutputStream());
             isConnected = true; 
             connectionAlert(isConnected);
             connectToRobot.setEnabled(true);
@@ -129,6 +120,18 @@ public class Server {
          {  
              //  
          } 
+     } 
+     
+ });
+ 
+ Thread tt = new Thread(new Runnable()  
+ {  
+	 
+ 
+     public void run()  
+     {  
+    	
+        socket.isConnected();
      } 
      
  });
