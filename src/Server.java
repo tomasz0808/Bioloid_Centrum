@@ -45,15 +45,17 @@ public class Server {
 					public void actionPerformed(ActionEvent e) {
 							isWaiting = true;
 							connecion();
+					}});
 				        	
 							while(isWaiting == true)
 							{	
 								System.out.println("1step");
-								while(isConnected == true){
+								if(isConnected ==true)
+								{
 									System.out.println("2step");
 									if(socket.isConnected())
 										System.out.println("3step");
-									{	connectionAlert(isConnected);
+									{	
 								 		while(socket.isConnected()){    
 								 			try{
 								 				
@@ -67,11 +69,7 @@ public class Server {
 									}	
 								}
 							}
-						    	
-						
-						
-					}
-				});
+
 				 
 	 	
 	 okno.addWindowListener(new WindowAdapter() {	
@@ -98,13 +96,10 @@ public class Server {
  
  public void connectionAlert(boolean isConnected)
  {
-	 if(isConnected == false){
-		
+	 if(isConnected == false){		
 			 connectionStatus.setForeground(Color.RED);
 			 connectionStatus.setText("Not Connected");
-			 connectToRobot.setText("Connect to Robot");
-		 
-		  
+			 connectToRobot.setText("Connect to Robot");		 		  
 	 }else{
 		 
 		 connectionStatus.setForeground(new Color(60, 179, 113));
@@ -137,6 +132,7 @@ public class Server {
             socket = serverSocket.accept(); // Tu czeka
            
             isConnected = true; 
+            connectionAlert(isConnected);
 
             connectToRobot.setEnabled(true);
             
