@@ -1,9 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,8 +36,10 @@ public class Gui2 {
 	private static  DefaultTableModel model = new DefaultTableModel(
 			new Object[][] {		},
 			new String[] {"Id", "Time", "Patient status", "Assistance"});
-	public static JButton wakeUp = new JButton("Wake up Robot");
-	
+	public static JButton wakeUp;
+	public static JButton connectToRobot;	
+	public static JLabel connectionStatus;
+	private String ipAddr ;
 	
 	
 	public static void addtotable(String status, String nurse){
@@ -45,11 +48,16 @@ public class Gui2 {
 		tableId++;		
 	}
 	
-	public Gui2() {
+	public Gui2() throws UnknownHostException {
 		frameinit();
 	}
 	
-	public void frameinit(){
+	public void ipGetter() throws UnknownHostException{
+		
+		ipAddr = InetAddress.getLocalHost().getHostAddress();
+	}
+	
+	public void frameinit() throws UnknownHostException{
 		
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +66,7 @@ public class Gui2 {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+
 		
 		JPanel panelIp = new JPanel();
 		panelIp.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -68,17 +77,18 @@ public class Gui2 {
 		JLabel lblConnectionStatus = new JLabel("Connection status:");
 		lblConnectionStatus.setBounds(217, 77, 106, 16);
 		panelIp.add(lblConnectionStatus);
-		
-		JLabel connectionStatus = new JLabel("Connected");
-		connectionStatus.setForeground(new Color(60, 179, 113));
-		connectionStatus.setBounds(331, 71, 89, 28);
+				
+		connectionStatus = new JLabel("Not conneted");
+		connectionStatus.setForeground(Color.RED);
+		connectionStatus.setBounds(331, 71, 160, 28);
 		panelIp.add(connectionStatus);
 		
-		JButton connectToRobot = new JButton("Connect to robot");
+		connectToRobot = new JButton("Connect to robot"); 	
 		connectToRobot.setBounds(217, 13, 143, 44);
 		panelIp.add(connectToRobot);
 		
-		JLabel myIp = new JLabel("192.168.1.1.");
+		ipGetter();
+		JLabel myIp = new JLabel(ipAddr);
 		myIp.setFont(myIp.getFont().deriveFont(myIp.getFont().getStyle() | Font.BOLD));
 		myIp.setBounds(64, 76, 107, 19);
 		panelIp.add(myIp);
@@ -117,7 +127,7 @@ public class Gui2 {
 		panelWakeUp.setBounds(20, 180, 250, 100);
 		contentPane.add(panelWakeUp);
 		
-		
+		wakeUp = new JButton("Wake up Robot");
 		wakeUp.setBounds(15, 15, 140, 45);
 		
 		JLabel lblRobotStatus = new JLabel("Status:");
