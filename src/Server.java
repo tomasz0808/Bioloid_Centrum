@@ -12,6 +12,7 @@ import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 public class Server {
 
@@ -31,7 +32,7 @@ public class Server {
 	private int connectionPort= 10006;
 	private JTextField sendText;
 	public boolean connBool = false;
-	private JButton clearLog;
+
 
 	
  public Server() throws IOException 
@@ -42,7 +43,7 @@ public class Server {
 	connectionStatus = Gui2.connectionStatus;
 	btnSendMsg = Gui2.btnSendText;
 	sendText = Gui2.sendText;
-	clearLog = Gui2.clearLogs;
+	
 	
 	getTextToTable.start();
 	connThread.start(); 
@@ -211,7 +212,8 @@ public class Server {
 		    	try {
 					dataIn = dataInputStream.readUTF();
 					if (!dataIn.isEmpty()){    	
-				    	Gui2.addtotable(dataIn, dataIn);  
+				    	Gui2.addtotable(dataIn, dataIn);
+				    	
 				    }
 					
 				} 

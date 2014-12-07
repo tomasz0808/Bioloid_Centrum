@@ -1,6 +1,6 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -22,12 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-
-
-
-
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
@@ -36,7 +32,7 @@ public class Gui2 {
 
 	public static JFrame frame = new JFrame();
 	private JPanel contentPane;
-	private JTable table;
+	public static JTable table;
 	
 	public static DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 	public static int tableId = 1;
@@ -52,14 +48,51 @@ public class Gui2 {
 	public static JButton clearLogs;
 	
 	
-	public static void addtotable(String status, String nurse){
-		Date dateobj = new Date();
-		model.insertRow(0, new Object [] {tableId, df.format(dateobj),status, nurse});
-		tableId++;		
+
+	
+	 
+	
+	public void dodaj(){
+		for(int i=0; i<6; i++){
+			
+			Date dateobj = new Date();
+			//table.setDefaultRenderer(Object.class, new MyRenderer());
+			table.getColumn("Patient status").setCellRenderer(
+			        new DefaultTableCellRenderer() {
+
+			        Color originalColor = null;
+
+			        @Override
+			        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+			            DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			            if (originalColor == null) {
+			                originalColor = getForeground();
+			            }
+			            if (value == null) {
+			                renderer.setText("");
+			            } else {
+			                renderer.setText(value.toString());
+			            }
+
+			            if (value.toString().equalsIgnoreCase("Help")) {
+			                renderer.setBackground(Color.RED);
+			            } else {
+			                renderer.setForeground(originalColor); // Retore original color
+			            }
+			            return renderer;
+			        }
+			    });
+			model.insertRow(0, new Object [] {tableId, df.format(dateobj),"siema", "iza"});
+			tableId++;		
+		}
 	}
+	
+
+	
 	
 	public Gui2() throws UnknownHostException {
 		frameinit();
+		dodaj();
 	}
 	
 	public void ipGetter() throws UnknownHostException{
@@ -77,7 +110,7 @@ public class Gui2 {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-	
+		
 		
 		
 		JPanel panelIp = new JPanel();
@@ -118,7 +151,7 @@ public class Gui2 {
 		
 		
 		table = new JTable();
-		table.setEnabled(false);
+		table.setEnabled(true);
 		table.setFont(UIManager.getFont("Table.font"));
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -130,7 +163,7 @@ public class Gui2 {
 		table.getColumnModel().getColumn(1).setPreferredWidth(112);
 		table.getColumnModel().getColumn(2).setPreferredWidth(295);
 		scrollPane.setViewportView(table);
-		
+				
 		clearLogs = new JButton("Clear logs");
 		clearLogs.setBounds(20, 300, 100, 25);
 		contentPane.add(clearLogs);
@@ -183,5 +216,45 @@ public class Gui2 {
 				tableId = 1;
 			}
 		});
+		
 	}
+	
+
+
+	
+	public static void addtotable(String status, String nurse){
+		
+		table.getColumn("Patient status").setCellRenderer(
+		        new DefaultTableCellRenderer() {
+
+		        Color originalColor = null;
+
+		        @Override
+		        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		            DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		            if (originalColor == null) {
+		                originalColor = getForeground();
+		            }
+		            if (value == null) {
+		                renderer.setText("");
+		            } else {
+		                renderer.setText(value.toString());
+		            }
+
+		            if (value.toString().equalsIgnoreCase("Help")) {
+		                renderer.setBackground(Color.RED);
+		            } else {
+		                renderer.setForeground(originalColor); // Retore original color
+		            }
+		            return renderer;
+		        }
+		    });
+		Date dateobj = new Date();
+		model.insertRow(0, new Object [] {tableId, df.format(dateobj),status, nurse});
+		tableId++;
+	}
+	
+	
+	
+
 }
