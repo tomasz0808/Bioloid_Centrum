@@ -78,8 +78,9 @@ public class Gui2 {
 		panelIp.add(lblConnectionStatus);
 
 		connectionStatus = new JLabel("Not conneted");
+		connectionStatus.setVerticalAlignment(SwingConstants.TOP);
 		connectionStatus.setForeground(Color.RED);
-		connectionStatus.setBounds(331, 71, 160, 28);
+		connectionStatus.setBounds(331, 77, 137, 46);
 		panelIp.add(connectionStatus);
 
 		connectToRobot = new JButton("Connect to robot");

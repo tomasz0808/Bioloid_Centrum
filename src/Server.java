@@ -47,6 +47,9 @@ public class Server {
 
 		getTextToTable.start();
 		connThread.start();
+		
+		
+//---------------- Connect to robot Action -----------------------		
 		connectToRobot.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -59,16 +62,16 @@ public class Server {
 						dataOutputStream.close();
 						socket.close();
 						connectionAlert(isConnected, isWake);
-					} catch (IOException e1) {
-						e1.printStackTrace();
+					} 
+					catch (IOException e1) {
+						Gui2.addtotable("Error");
 					}
-				} else {
-
+				} 
+				else {
 					try {
 						connecion();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						Gui2.addtotable("Error");
 					}
 
 				}
@@ -100,7 +103,6 @@ public class Server {
 						Gui2.addtotable("Message: " + rawText + " send");
 					} catch (IOException e1) {
 						Gui2.addtotable("Error");
-						e1.printStackTrace();
 					}
 				}
 			}
@@ -136,7 +138,7 @@ public class Server {
 		} else {
 			connectToRobot.setEnabled(true);
 			connectionStatus.setForeground(new Color(60, 179, 113));
-			connectionStatus.setText("Connected port: " + port);
+			connectionStatus.setText("Connected");
 			connectToRobot.setText("Abort Connection");
 		}
 		if (isWake == 1) {
@@ -169,8 +171,6 @@ public class Server {
 		serverSocket = new ServerSocket(connectionPort);
 		port = serverSocket.getLocalPort();
 		connBool = true;
-
-		// onnThread.start();
 	}
 
 	// --------------------- THREAD ------------------------------------------
@@ -181,24 +181,22 @@ public class Server {
 					try {
 						serverSocket.setSoTimeout(10000);
 						socket = serverSocket.accept();
-
-						dataInputStream = new DataInputStream(
-								socket.getInputStream());
-						dataOutputStream = new DataOutputStream(
-								socket.getOutputStream());
+						dataInputStream = new DataInputStream(socket.getInputStream());
+						dataOutputStream = new DataOutputStream(socket.getOutputStream());
 						isConnected = true;
+						Gui2.addtotable("Connected on port: " +port);
 						isWake = 2;
 						connectionAlert(isConnected, isWake);
-
 						connBool = false;
-					} catch (IOException ie) {
+						
+					} 
+					catch (IOException ie) {
 						connBool = false;
 						isConnected = false;
-
 						try {
 							serverSocket.close();
 						} catch (IOException e) {
-							e.printStackTrace();
+							Gui2.addtotable("Error");
 						}
 						connectionAlert(isConnected, isWake);
 					}
